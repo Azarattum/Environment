@@ -91,8 +91,17 @@ namespace Environment.Modules
                     url = file.StartsWith("http") ? file : Path.Combine(Url, file);
                 }
                 string path = Path.Combine("temp", $"{Name + Path.GetExtension(url)}");
-                
-                Utils.Log($"Downloading {Path.GetFileName(file)}...", ConsoleColor.DarkCyan);
+
+                string filename = Path.GetFileName(file);
+                while (!filename.Contains("."))
+                {
+                    filename = Path.GetFileName(Path.GetDirectoryName(file));
+                }
+
+                if (!url.Contains("sourceforge.net"))
+                {
+                    Utils.Log($"Downloading {filename}...", ConsoleColor.DarkCyan);
+                }
                 client.Headers.Add("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
                 client.DownloadFileCompleted += (object sender, AsyncCompletedEventArgs e) =>
@@ -102,23 +111,40 @@ namespace Environment.Modules
                         Monitor.Pulse(e.UserState);
                     }
                 };
+
+                bool init = false;
                 client.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
                 {
                     Console.CursorVisible = false;
                     int percents = e.ProgressPercentage;
-                    Console.Write("[DOWNLOAD]: [" + new string('=', (int)Math.Floor((double)percents / 4)) +
+                    Console.Write((!init ? "[DOWNLOAD]:" : "[INITIALZ]") + " [" + new string('=', (int)Math.Floor((double)percents / 4)) +
                         new string(' ', (int)Math.Ceiling((double)(100 - percents) / 4)) + $"] {percents}%    \r");
                 };
 
                 Object syncObject = new Object();
                 lock (syncObject)
                 {
+                    if (url.Contains("sourceforge.net"))
+                    {
+                        init = true;
+                        Utils.Log($"Initializing download...", ConsoleColor.DarkCyan);
+                    }
+
                     client.DownloadFileAsync(new Uri(url), path, syncObject);
                     Monitor.Wait(syncObject);
+                    init = false;
+
+                    if (url.Contains("sourceforge.net"))
+                    {
+                        Utils.Log($"Downloading {filename}..." + new string(' ', 15), ConsoleColor.DarkCyan);
+                        File.Delete(path);
+                        client.DownloadFileAsync(new Uri(url), path, syncObject);
+                        Monitor.Wait(syncObject);
+                    }
                     Console.CursorVisible = true;
                 }
 
-                Utils.Log($"Unpacking {Path.GetFileName(file)}..." + new string(' ', 10), ConsoleColor.DarkCyan);
+                Utils.Log($"Unpacking {filename}..." + new string(' ', 15), ConsoleColor.DarkCyan);
                 try
                 {
                     SevenZipExtractor extractor = new SevenZipExtractor(path);

@@ -37,6 +37,16 @@
     },
     {
       "enabled": true,
+      "name": "GCC",
+      "url": "http://tdm-gcc.tdragon.net/download",
+      "pattern": "http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%20[0-9]+%20series/([0-9]+[.][0-9]+[.][0-9]+)-tdm64-1/gcc-[0-9]+[.][0-9]+[.][0-9]+-tdm64-[0-9]-core.zip/download",
+      "version": "0.0.0",
+      "path": [
+        "./bin"
+      ]
+    },
+    {
+      "enabled": true,
       "name": "Git",
       "url": "https://github.com/git-for-windows/git/releases/",
       "pattern": "download/v([0-9]+[.][0-9]+[.][0-9]+).windows.1/PortableGit-([0-9]+[.][0-9]+[.][0-9]+)-64-bit.7z.exe",
