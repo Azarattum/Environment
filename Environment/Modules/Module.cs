@@ -88,7 +88,7 @@ namespace Environment.Modules
                 //Download file
                 if (url == Url)
                 {
-                    url = Path.Combine(Url, file);
+                    url = file.StartsWith("http") ? file : Path.Combine(Url, file);
                 }
                 string path = Path.Combine("temp", $"{Name + Path.GetExtension(url)}");
                 
