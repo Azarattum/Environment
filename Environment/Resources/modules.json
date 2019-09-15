@@ -1,0 +1,73 @@
+{
+  "programs": [
+    {
+      "enabled": true,
+      "name": "NodeJS",
+      "url": "https://nodejs.org/dist/latest/",
+      "pattern": "node-v([0-9]+[.][0-9]+[.][0-9]+)-win-x64[.]zip",
+      "version": "0.0.0",
+      "path": [ "./" ]
+    },
+    {
+      "enabled": true,
+      "name": "PHP",
+      "url": "https://windows.php.net/downloads/releases/latest//",
+      "pattern": "php-([0-9]+[.][0-9]+)-Win32-VC15-x64-latest.zip",
+      "version": "0.0.0",
+      "path": [ "./" ]
+    },
+    {
+      "enabled": true,
+      "name": "Composer",
+      "url": "https://getcomposer.org/download/",
+      "pattern": "([0-9]+[.][0-9]+[.][0-9]+)/composer.phar",
+      "version": "0.0.0",
+      "path": [ "./", "./data/vendor/bin" ]
+    },
+    {
+      "enabled": true,
+      "name": "Git",
+      "url": "https://github.com/git-for-windows/git/releases/",
+      "pattern": "download/v([0-9]+[.][0-9]+[.][0-9]+).windows.1/PortableGit-([0-9]+[.][0-9]+[.][0-9]+)-64-bit.7z.exe",
+      "version": "0.0.0",
+      "path": [ "./cmd/" ]
+    },
+    {
+      "enabled": true,
+      "name": "VSCode",
+      "url": "https://update.code.visualstudio.com/latest/win32-x64-archive/stable",
+      "pattern": "VSCode-win32-x64-([0-9]+[.][0-9]+[.][0-9]+).zip",
+      "version": "0.0.0",
+      "path": [ "./bin/" ]
+    }
+  ],
+  "npm": [
+    {
+      "enabled": true,
+      "name": "live-server",
+      "version": "0.0.0"
+    },
+    {
+      "enabled": true,
+      "name": "typescript",
+      "version": "0.0.0"
+    },
+    {
+      "enabled": true,
+      "name": "webpack",
+      "version": "0.0.0"
+    },
+    {
+      "enabled": true,
+      "name": "webpack-cli",
+      "version": "0.0.0"
+    }
+  ],
+  "composer": [
+    {
+      "enabled": true,
+      "name": "laravel/installer",
+      "version": "0.0.0"
+    }
+  ]
+}
