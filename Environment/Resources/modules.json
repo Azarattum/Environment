@@ -26,6 +26,17 @@
     },
     {
       "enabled": true,
+      "name": "Python",
+      "url": "https://github.com/winpython/winpython/releases",
+      "pattern": "download/[0-9]+[.][0-9]+[.][0-9]+/Winpython64-([0-9]+[.][0-9]+[.][0-9]+)[.][0-9]Zero.exe",
+      "version": "0.0.0",
+      "path": [
+        "./python*",
+        "./python*/Scripts"
+      ]
+    },
+    {
+      "enabled": true,
       "name": "Git",
       "url": "https://github.com/git-for-windows/git/releases/",
       "pattern": "download/v([0-9]+[.][0-9]+[.][0-9]+).windows.1/PortableGit-([0-9]+[.][0-9]+[.][0-9]+)-64-bit.7z.exe",

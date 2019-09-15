@@ -337,6 +337,38 @@ namespace Environment
                     foreach (string path in program.Paths)
                     {
                         string newPath = Path.Combine("..", program.Name.ToLower(), path);
+                        if (newPath.Contains("*") || newPath.Contains("?"))
+                        {
+                            string parsePath(string dir, string pattern)
+                            {
+                                string parent = Path.GetDirectoryName(pattern);
+                                if (parent == "" || parent == ".")
+                                {
+                                    return Directory.GetDirectories(dir, pattern)[0];
+                                }
+                                else
+                                {
+                                    string[] parts = pattern.Replace("/", "\\").Split('\\');
+                                    string newDir = Directory.GetDirectories(dir,
+                                        parts[parts[0] == "." ? 1 : 0]
+                                    )[0];
+
+                                    return parsePath(newDir,
+                                        string.Join(
+                                            "/", parts, 
+                                            parts[0] == "." ? 2 : 1,
+                                            parts.Length - (parts[0] == "." ? 2 : 1)
+                                        )
+                                    );
+                                }
+                            }
+
+                            newPath = parsePath(
+                                Path.Combine("..", program.Name.ToLower()),
+                                path
+                            );
+                        }
+
                         newPath = Path.GetFullPath(newPath);
                         if (Directory.Exists(newPath))
                         {
